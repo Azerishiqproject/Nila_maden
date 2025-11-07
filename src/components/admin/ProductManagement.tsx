@@ -224,20 +224,20 @@ export default function ProductManagement() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-amber-400/10 to-yellow-500/10 rounded-2xl p-6 border border-amber-400/20 backdrop-blur-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl flex items-center justify-center">
-              <Package className="w-6 h-6 text-white" />
+      <div className="bg-gradient-to-r from-amber-400/10 to-yellow-500/10 rounded-2xl p-4 sm:p-6 border border-amber-400/20 backdrop-blur-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Package className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-white">Ürün Yönetimi</h2>
-              <p className="text-gray-300">Koleksiyon ürünlerini ekleyin, düzenleyin ve yönetin</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Ürün Yönetimi</h2>
+              <p className="text-sm sm:text-base text-gray-300">Koleksiyon ürünlerini ekleyin, düzenleyin ve yönetin</p>
             </div>
           </div>
           <button
             onClick={handleAddProduct}
-            className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 text-white rounded-xl font-medium hover:from-amber-500 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 text-white rounded-xl font-medium hover:from-amber-500 hover:to-yellow-600 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg"
           >
             <Plus className="h-4 w-4 mr-2" />
             Yeni Ürün Ekle
@@ -416,8 +416,8 @@ export default function ProductManagement() {
 
       {/* Add/Edit Product Modal */}
       {(showAddModal || showEditModal) && (
-        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-2xl rounded-2xl bg-gray-800/95 backdrop-blur-xl border-white/20">
+        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-50 p-4">
+          <div className="relative top-4 sm:top-20 mx-auto p-4 sm:p-5 border w-full max-w-4xl shadow-2xl rounded-2xl bg-gray-800/95 backdrop-blur-xl border-white/20">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-semibold text-white">
@@ -578,20 +578,20 @@ export default function ProductManagement() {
                   </label>
                 </div>
                 
-                <div className="flex justify-end space-x-3 pt-4">
+                <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
                   <button
                     type="button"
                     onClick={() => {
                       setShowAddModal(false);
                       setShowEditModal(false);
                     }}
-                    className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20"
+                    className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20"
                   >
                     İptal
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
                   >
                     {showAddModal ? 'Ürün Ekle' : 'Güncelle'}
                   </button>
@@ -604,8 +604,8 @@ export default function ProductManagement() {
 
       {/* View Product Modal */}
       {showViewModal && selectedProduct && (
-        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-full max-w-4xl shadow-2xl rounded-2xl bg-gray-800/95 backdrop-blur-xl border-white/20">
+        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-50 p-4">
+          <div className="relative top-4 sm:top-20 mx-auto p-4 sm:p-5 border w-full max-w-4xl shadow-2xl rounded-2xl bg-gray-800/95 backdrop-blur-xl border-white/20">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-semibold text-white">
@@ -621,7 +621,7 @@ export default function ProductManagement() {
                 </button>
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                 <div>
                   <div className="aspect-square overflow-hidden rounded-2xl relative">
                     <Image 
@@ -648,7 +648,7 @@ export default function ProductManagement() {
                     <p className="text-gray-300">{selectedProduct.description}</p>
                   </div>
                   
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-400 mb-1">Dönem</label>
                       <p className="text-white">{selectedProduct.period}</p>
@@ -674,20 +674,20 @@ export default function ProductManagement() {
                     </div>
                   </div>
                   
-                  <div className="flex space-x-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <button
                       onClick={() => {
                         setShowViewModal(false);
                         handleEditProduct(selectedProduct);
                       }}
-                      className="flex-1 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                      className="flex-1 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center"
                     >
-                      <Edit className="w-4 h-4 mr-2 inline" />
+                      <Edit className="w-4 h-4 mr-2" />
                       Düzenle
                     </button>
                     <button
                       onClick={() => setShowViewModal(false)}
-                      className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20"
+                      className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20"
                     >
                       Kapat
                     </button>

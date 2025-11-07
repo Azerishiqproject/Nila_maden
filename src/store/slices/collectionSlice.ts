@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { RootState } from '../index';
 
@@ -59,7 +59,7 @@ export const fetchCollectionProducts = createAsyncThunk(
         } as CollectionProduct);
       });
       return productsData;
-    } catch (error) {
+    } catch {
       throw new Error('Ürünler yüklenirken hata oluştu');
     }
   }

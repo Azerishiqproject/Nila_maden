@@ -1,5 +1,4 @@
 import ServiceCard from './ProductCard';
-import { ArrowRight } from 'lucide-react';
 
 // Featured services data
 const featuredServices = [

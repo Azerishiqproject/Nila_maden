@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { 
   collection, 
   getDocs, 
-  getDoc,
   doc,
   addDoc, 
   updateDoc, 
@@ -179,7 +178,7 @@ export const addBlogPost = createAsyncThunk(
         updatedAt: postData.updatedAt.toISOString(),
         publishedAt: postData.publishedAt ? postData.publishedAt.toISOString() : undefined,
       } as BlogPost;
-    } catch (error) {
+    } catch {
       throw new Error('Blog yazısı eklenirken hata oluştu');
     }
   }
@@ -191,14 +190,21 @@ export const updateBlogPost = createAsyncThunk(
   async ({ id, ...post }: Partial<BlogPost> & { id: string }) => {
     try {
       const postRef = doc(db, 'blogPosts', id);
+      const updatedAt = new Date();
+      const publishedAt = post.isPublished && !post.publishedAt ? new Date() : undefined;
       const updateData = {
         ...post,
-        updatedAt: new Date(),
-        publishedAt: post.isPublished && !post.publishedAt ? new Date() : undefined,
+        updatedAt,
+        publishedAt,
       };
       await updateDoc(postRef, updateData);
-      return { id, ...updateData } as BlogPost;
-    } catch (error) {
+      return {
+        id,
+        ...post,
+        updatedAt: updatedAt.toISOString(),
+        publishedAt: publishedAt ? publishedAt.toISOString() : undefined,
+      } as BlogPost;
+    } catch {
       throw new Error('Blog yazısı güncellenirken hata oluştu');
     }
   }
@@ -211,7 +217,7 @@ export const deleteBlogPost = createAsyncThunk(
     try {
       await deleteDoc(doc(db, 'blogPosts', id));
       return id;
-    } catch (error) {
+    } catch {
       throw new Error('Blog yazısı silinirken hata oluştu');
     }
   }

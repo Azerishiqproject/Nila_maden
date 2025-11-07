@@ -14,6 +14,7 @@ import {
   X,
   Save,
   EyeOff,
+  FileText,
 } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import {
@@ -116,7 +117,8 @@ export default function BlogManagement() {
       Promise.all([
         import('@ckeditor/ckeditor5-react'),
         import('@ckeditor/ckeditor5-build-classic')
-      ]).then(([ckeditorReact, ClassicEditor]) => {
+      ]).then(([, ClassicEditor]) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (window as any).ClassicEditor = ClassicEditor.default;
         setEditorReady(true);
       });
@@ -364,21 +366,28 @@ export default function BlogManagement() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-white mb-2">Blog Yönetimi</h2>
-          <p className="text-gray-300">Blog yazılarınızı yönetin</p>
+      <div className="bg-gradient-to-r from-amber-400/10 to-yellow-500/10 rounded-2xl p-4 sm:p-6 border border-amber-400/20 backdrop-blur-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0">
+              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2">Blog Yönetimi</h2>
+              <p className="text-sm sm:text-base text-gray-300">Blog yazılarınızı yönetin</p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              resetForm();
+              setShowAddModal(true);
+            }}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white rounded-xl font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            <Plus className="w-5 h-5" />
+            Yeni Blog Yazısı
+          </button>
         </div>
-        <button
-          onClick={() => {
-            resetForm();
-            setShowAddModal(true);
-          }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white rounded-xl font-medium transition-all duration-300 transform hover:scale-105 shadow-lg"
-        >
-          <Plus className="w-5 h-5" />
-          Yeni Blog Yazısı
-        </button>
       </div>
 
       {/* Error Display */}
@@ -499,8 +508,8 @@ export default function BlogManagement() {
 
       {/* Add Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 overflow-y-auto">
-          <div className="min-h-screen px-4 py-8">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 overflow-y-auto p-4">
+          <div className="min-h-screen">
             <div className="max-w-4xl mx-auto bg-gray-800 rounded-2xl shadow-2xl">
               <div className="sticky top-0 bg-gray-800 border-b border-white/20 px-6 py-4 rounded-t-2xl flex items-center justify-between">
                 <h3 className="text-xl font-bold text-white">Yeni Blog Yazısı</h3>
@@ -545,7 +554,7 @@ export default function BlogManagement() {
                     placeholder="Kısa özet..."
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">Yazar *</label>
                     <input
@@ -660,19 +669,19 @@ export default function BlogManagement() {
                     <span className="text-gray-300">Öne Çıkan</span>
                   </label>
                 </div>
-                <div className="flex justify-end gap-3 pt-4">
+                <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
                   <button
                     onClick={() => {
                       setShowAddModal(false);
                       resetForm();
                     }}
-                    className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
+                    className="w-full sm:w-auto px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
                   >
                     İptal
                   </button>
                   <button
                     onClick={handleAdd}
-                    className="px-6 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+                    className="w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
                   >
                     <Save className="w-4 h-4" />
                     Kaydet
@@ -686,8 +695,8 @@ export default function BlogManagement() {
 
       {/* Edit Modal */}
       {showEditModal && selectedPost && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 overflow-y-auto">
-          <div className="min-h-screen px-4 py-8">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 overflow-y-auto p-4">
+          <div className="min-h-screen">
             <div className="max-w-4xl mx-auto bg-gray-800 rounded-2xl shadow-2xl">
               <div className="sticky top-0 bg-gray-800 border-b border-white/20 px-6 py-4 rounded-t-2xl flex items-center justify-between">
                 <h3 className="text-xl font-bold text-white">Blog Yazısını Düzenle</h3>
@@ -730,7 +739,7 @@ export default function BlogManagement() {
                     className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-400"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">Yazar *</label>
                     <input
@@ -843,20 +852,20 @@ export default function BlogManagement() {
                     <span className="text-gray-300">Öne Çıkan</span>
                   </label>
                 </div>
-                <div className="flex justify-end gap-3 pt-4">
+                <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
                   <button
                     onClick={() => {
                       setShowEditModal(false);
                       setSelectedPost(null);
                       resetForm();
                     }}
-                    className="px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
+                    className="w-full sm:w-auto px-6 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors"
                   >
                     İptal
                   </button>
                   <button
                     onClick={handleUpdate}
-                    className="px-6 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+                    className="w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 text-white rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
                   >
                     <Save className="w-4 h-4" />
                     Güncelle

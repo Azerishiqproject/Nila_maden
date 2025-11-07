@@ -8,24 +8,22 @@ import { validateConfig } from '@/lib/config';
 
 export default function AdminLogin() {
   const dispatch = useAppDispatch();
-  const { loading, isAuthenticated } = useAppSelector((state: { auth: { loading: boolean; error: string | null; isAuthenticated: boolean } }) => state.auth);
+  const { loading } = useAppSelector((state: { auth: { loading: boolean; error: string | null; isAuthenticated: boolean } }) => state.auth);
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [loginError, setLoginError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isFirebaseConfigured, setIsFirebaseConfigured] = useState<boolean>(false);
 
   // Firebase authentication kontrolü
   useEffect(() => {
     setIsCheckingAuth(true);
     // Firebase config check (build-time env presence)
     try {
-      const configured = validateConfig();
-      setIsFirebaseConfigured(configured);
-    } catch (_) {
-      setIsFirebaseConfigured(false);
+      validateConfig();
+    } catch {
+      // Config validation failed
     }
     
     dispatch(checkAuthState())

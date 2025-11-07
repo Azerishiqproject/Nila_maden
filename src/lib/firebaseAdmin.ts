@@ -30,7 +30,7 @@ export function getAdminApp(): App | null {
       credential: applicationDefault(),
     });
     return adminApp;
-  } catch (err) {
+  } catch {
     // Admin SDK not initialized
     return null;
   }

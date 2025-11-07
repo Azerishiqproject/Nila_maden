@@ -200,8 +200,8 @@ export default function Contact() {
       {/* Filter and Content */}
       <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
         {/* Filter Tabs */}
-        <div className="border-b border-white/20 px-6">
-          <div className="flex space-x-8">
+        <div className="border-b border-white/20 px-4 sm:px-6">
+          <div className="flex flex-wrap gap-2 sm:gap-0 sm:space-x-8 overflow-x-auto">
             {[
               { key: 'all', label: 'Tümü', count: contacts.length },
               { key: 'new', label: 'Yeni', count: contacts.filter(c => c.status === 'new').length },
@@ -211,7 +211,7 @@ export default function Contact() {
               <button
                 key={key}
                 onClick={() => setFilter(key as 'all' | 'new' | 'read' | 'replied')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
+                className={`py-3 sm:py-4 px-2 sm:px-1 border-b-2 font-medium text-xs sm:text-sm transition-colors whitespace-nowrap ${
                   filter === key
                     ? 'border-amber-400 text-amber-400'
                     : 'border-transparent text-gray-400 hover:text-white hover:border-white/30'
@@ -312,8 +312,8 @@ export default function Contact() {
 
       {/* Contact Detail Modal */}
       {selectedContact && (
-        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-50">
-          <div className="relative top-20 mx-auto p-5 border w-full max-w-2xl shadow-2xl rounded-2xl bg-gray-800/95 backdrop-blur-xl border-white/20">
+        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-50 p-4">
+          <div className="relative top-4 sm:top-20 mx-auto p-4 sm:p-5 border w-full max-w-2xl shadow-2xl rounded-2xl bg-gray-800/95 backdrop-blur-xl border-white/20">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-semibold text-white">
@@ -330,7 +330,7 @@ export default function Contact() {
               </div>
               
               <div className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-1">Ad Soyad</label>
                     <p className="text-white">{selectedContact.name}</p>
@@ -361,12 +361,12 @@ export default function Contact() {
                   </div>
                 </div>
                 
-                <div className="flex items-center justify-between pt-4 border-t border-white/20">
-                  <div className="flex space-x-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-white/20">
+                  <div className="flex flex-col sm:flex-row gap-2 flex-1">
                     {selectedContact.status === 'new' && (
                       <button
                         onClick={() => handleUpdateStatus(selectedContact.id!, 'read')}
-                        className="px-4 py-2 text-sm font-medium text-amber-400 bg-amber-400/20 hover:bg-amber-400/30 rounded-lg transition-colors border border-amber-400/30"
+                        className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-amber-400 bg-amber-400/20 hover:bg-amber-400/30 rounded-lg transition-colors border border-amber-400/30"
                       >
                         Okundu Olarak İşaretle
                       </button>
@@ -374,7 +374,7 @@ export default function Contact() {
                     {selectedContact.status === 'read' && (
                       <button
                         onClick={() => handleUpdateStatus(selectedContact.id!, 'replied')}
-                        className="px-4 py-2 text-sm font-medium text-green-400 bg-green-400/20 hover:bg-green-400/30 rounded-lg transition-colors border border-green-400/30"
+                        className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-green-400 bg-green-400/20 hover:bg-green-400/30 rounded-lg transition-colors border border-green-400/30"
                       >
                         Yanıtlandı Olarak İşaretle
                       </button>
@@ -383,7 +383,7 @@ export default function Contact() {
                   
                   <button
                     onClick={() => setSelectedContact(null)}
-                    className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 hover:bg-white/20 rounded-lg transition-colors border border-white/20"
+                    className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 hover:bg-white/20 rounded-lg transition-colors border border-white/20"
                   >
                     Kapat
                   </button>

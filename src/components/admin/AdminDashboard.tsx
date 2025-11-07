@@ -92,12 +92,7 @@ export default function AdminDashboard({ isStaticAuth = false }: AdminDashboardP
       icon: FileText,
       description: 'Blog yazılarını yönet'
     },
-    {
-      id: 'prices',
-      name: 'Altın Fiyatları',
-      icon: DollarSign,
-      description: 'Altın fiyatlarını güncelle'
-    },
+   
     {
       id: 'contact',
       name: 'İletişim',
@@ -384,8 +379,8 @@ export default function AdminDashboard({ isStaticAuth = false }: AdminDashboardP
 
       {/* Admin Creation Modal */}
       {showCreateUser && (
-        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-[9999]">
-          <div className="relative top-20 mx-auto p-5 border w-96 shadow-2xl rounded-2xl bg-gray-800/95 backdrop-blur-xl border-white/20">
+        <div className="fixed inset-0 bg-gray-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-[9999] p-4">
+          <div className="relative top-4 sm:top-20 mx-auto p-4 sm:p-5 border w-full max-w-md shadow-2xl rounded-2xl bg-gray-800/95 backdrop-blur-xl border-white/20">
             <div className="mt-3">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-medium text-white">
@@ -448,17 +443,17 @@ export default function AdminDashboard({ isStaticAuth = false }: AdminDashboardP
                   />
                 </div>
                 
-                <div className="flex justify-end space-x-3 pt-4">
+                <div className="flex flex-col sm:flex-row justify-end gap-3 pt-4">
                   <button
                     type="button"
                     onClick={() => setShowCreateUser(false)}
-                    className="px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20"
+                    className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-300 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 border border-white/20"
                   >
                     İptal
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                    className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-500 hover:to-yellow-600 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
                   >
                     Oluştur
                   </button>
