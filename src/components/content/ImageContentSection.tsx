@@ -55,10 +55,13 @@ export default function ImageContentSection() {
 
             {/* CTA Button */}
             <div className="text-center">
-              <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold text-base sm:text-lg transition-colors duration-200 flex items-center justify-center gap-3 mx-auto shadow-sm w-full sm:w-auto">
+              <a 
+                href="/koleksiyonlarimiz"
+                className="inline-flex items-center justify-center gap-3 bg-gray-800 hover:bg-gray-700 text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold text-base sm:text-lg transition-colors duration-200 shadow-sm w-full sm:w-auto"
+              >
                 Ürünleri İncele
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
+              </a>
             </div>
 
             {/* Bottom Info */}

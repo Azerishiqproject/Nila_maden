@@ -6,8 +6,7 @@ import {
   Footer, 
   FAQSection, 
   MarketSummary, 
-  LiveGoldPrices, 
-  PriceAlerts
+  LiveGoldPrices
 } from '@/components';
 import { 
   goldPriceFAQ 
@@ -58,8 +57,7 @@ export default function AltinFiyatlariPage() {
       {/* Live Gold Prices Section */}
       <LiveGoldPrices />
 
-      {/* Price Alerts Section */}
-      <PriceAlerts />
+     
 
       {/* FAQ Section */}
       <FAQSection 

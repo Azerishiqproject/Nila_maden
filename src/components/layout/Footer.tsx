@@ -1,6 +1,21 @@
-import { Mail, Phone, MapPin, Shield } from 'lucide-react';
+'use client';
+
+import { Mail, Phone, MapPin, Shield, Check } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Footer() {
+  const [copiedItem, setCopiedItem] = useState<string | null>(null);
+
+  const handleCopy = async (text: string, itemId: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedItem(itemId);
+      setTimeout(() => setCopiedItem(null), 2000);
+    } catch (err) {
+      console.error('Kopyalama hatası:', err);
+    }
+  };
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white relative overflow-hidden">
       {/* Background Pattern */}
@@ -43,29 +58,41 @@ export default function Footer() {
           <div>
             <h4 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">İletişim</h4>
             <div className="space-y-2 sm:space-y-3">
-              <div className="flex items-center gap-3 p-2 sm:p-3 bg-white/5 rounded-lg">
+              <button
+                onClick={() => handleCopy('+90 (212) 555 0123', 'phone')}
+                className="flex items-center gap-3 p-2 sm:p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer w-full text-left group"
+              >
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm sm:text-base">+90 (212) 555 0123</span>
-              </div>
-              <div className="flex items-center gap-3 p-2 sm:p-3 bg-white/5 rounded-lg">
+                <span className="text-gray-300 text-sm sm:text-base group-hover:text-white transition-colors">+90 (212) 555 0123</span>
+                {copiedItem === 'phone' && (
+                  <Check className="w-4 h-4 text-emerald-400 ml-auto" />
+                )}
+              </button>
+              <button
+                onClick={() => handleCopy('info@kiymetlimaden.com', 'email')}
+                className="flex items-center gap-3 p-2 sm:p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer w-full text-left group"
+              >
                 <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm sm:text-base break-all">info@kiymetlimaden.com</span>
-              </div>
-              <div className="flex items-center gap-3 p-2 sm:p-3 bg-white/5 rounded-lg">
+                <span className="text-gray-300 text-sm sm:text-base break-all group-hover:text-white transition-colors">info@kiymetlimaden.com</span>
+                {copiedItem === 'email' && (
+                  <Check className="w-4 h-4 text-emerald-400 ml-auto" />
+                )}
+              </button>
+              <button
+                onClick={() => handleCopy('İstanbul, Türkiye', 'address')}
+                className="flex items-center gap-3 p-2 sm:p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-200 cursor-pointer w-full text-left group"
+              >
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 flex-shrink-0" />
-                <span className="text-gray-300 text-sm sm:text-base">İstanbul, Türkiye</span>
-              </div>
+                <span className="text-gray-300 text-sm sm:text-base group-hover:text-white transition-colors">İstanbul, Türkiye</span>
+                {copiedItem === 'address' && (
+                  <Check className="w-4 h-4 text-emerald-400 ml-auto" />
+                )}
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Links Row */}
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
-          <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors duration-200 text-sm sm:text-base">Ana Sayfa</a>
-          <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors duration-200 text-sm sm:text-base">Altın Fiyatları</a>
-          <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors duration-200 text-sm sm:text-base">Hizmetlerimiz</a>
-          <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors duration-200 text-sm sm:text-base">İletişim</a>
-        </div>
+      
 
         {/* Bottom Bar */}
         <div className="border-t border-white/10 pt-4 sm:pt-6">
@@ -74,8 +101,8 @@ export default function Footer() {
               © 2024 Kıymetli Maden. Tüm hakları saklıdır.
             </div>
             <div className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm">
-              <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors duration-200">Gizlilik</a>
-              <a href="#" className="text-gray-400 hover:text-amber-400 transition-colors duration-200">Şartlar</a>
+              <a href="/privacy" className="text-gray-400 hover:text-amber-400 transition-colors duration-200">Gizlilik</a>
+              <a href="/terms" className="text-gray-400 hover:text-amber-400 transition-colors duration-200">Şartlar</a>
             </div>
           </div>
         </div>

@@ -5,3 +5,4 @@ export { default as FeaturedProductsSection } from './FeaturedProductsSection';
 export { default as ImageContentSection } from './ImageContentSection';
 export { default as ProductCard } from './ProductCard';
 export { default as CTASection } from './CTASection';
+export { default as BlogSection } from './BlogSection';

@@ -94,13 +94,7 @@ export default function FeaturedProductsSection() {
           ))}
         </div>
 
-        {/* CTA Button */}
-        <div className="text-center">
-          <button className="bg-gray-800 hover:bg-gray-700 text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-semibold text-base sm:text-lg transition-colors duration-200 flex items-center justify-center gap-3 mx-auto shadow-sm w-full sm:w-auto">
-            Tüm Hizmetleri Görüntüle
-            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-          </button>
-        </div>
+       
 
         {/* Bottom Info */}
         <div className="text-center mt-8 sm:mt-12">

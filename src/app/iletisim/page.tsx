@@ -460,12 +460,24 @@ export default function IletisimPage() {
             tüm sorularınızı yanıtlayalım.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-gray-900 px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-all duration-200 shadow-sm">
-              Hemen Ara
-            </button>
-            <button className="bg-transparent text-white border border-white px-6 py-3 rounded-full font-medium hover:bg-white hover:text-gray-900 transition-all duration-200">
-              WhatsApp
-            </button>
+            <a 
+              href="tel:+902125550123"
+              className="group relative bg-gradient-to-r from-emerald-500 to-green-600 text-white px-8 py-4 rounded-full font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2 text-center"
+            >
+              <Phone className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+              <span>Hemen Ara</span>
+              <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+            </a>
+            <a 
+              href="https://wa.me/902125550123"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white px-8 py-4 rounded-full font-semibold hover:from-[#128C7E] hover:to-[#075E54] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2 text-center"
+            >
+              <MessageSquare className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <span>WhatsApp</span>
+              <div className="absolute inset-0 rounded-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+            </a>
           </div>
         </div>
       </section>

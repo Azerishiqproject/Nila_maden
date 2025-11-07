@@ -6,10 +6,11 @@ import { Menu, X} from 'lucide-react';
 const navigation = [
   { name: 'Ana Sayfa', href: '/' },
   { name: 'Altın Fiyatları', href: '/altin-fiyatlari' },
-  { name: 'Yatırım', href: '/yatirim' },
   { name: 'Hakkımızda', href: '/hakkimizda' },
+  { name: 'Blog', href: '/blog' },
   { name: 'Koleksiyonlarımız', href: '/koleksiyonlarimiz' },
   { name: 'İletişim', href: '/iletisim' },
+
 ];
 
 export default function Navbar() {

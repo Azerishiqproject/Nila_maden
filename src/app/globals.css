@@ -24,3 +24,156 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* CKEditor Content Styles */
+.blog-content {
+  line-height: 1.8;
+}
+
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #111827;
+}
+
+.blog-content h1 { font-size: 2.25em; }
+.blog-content h2 { font-size: 1.875em; }
+.blog-content h3 { font-size: 1.5em; }
+.blog-content h4 { font-size: 1.25em; }
+
+.blog-content p {
+  margin-bottom: 1em;
+}
+
+.blog-content ul,
+.blog-content ol {
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.blog-content li {
+  margin-bottom: 0.5em;
+}
+
+.blog-content a {
+  color: #f59e0b;
+  text-decoration: underline;
+}
+
+.blog-content a:hover {
+  color: #d97706;
+}
+
+.blog-content blockquote {
+  border-left: 4px solid #f59e0b;
+  padding-left: 1em;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1.5em 0;
+}
+
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+.blog-content table th,
+.blog-content table td {
+  border: 1px solid #e5e7eb;
+  padding: 0.75em;
+  text-align: left;
+}
+
+.blog-content table th {
+  background-color: #f9fafb;
+  font-weight: bold;
+}
+
+.blog-content code {
+  background-color: #f3f4f6;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
+
+.blog-content pre {
+  background-color: #1f2937;
+  color: #f9fafb;
+  padding: 1em;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+.blog-content pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* CKEditor Admin Styles */
+.ckeditor-wrapper {
+  background: white;
+  border-radius: 0.5rem;
+}
+
+.ckeditor-wrapper .ck-editor__editable {
+  min-height: 400px !important;
+  color: #374151 !important;
+  background: #ffffff !important;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.ckeditor-wrapper .ck-toolbar {
+  background: #f9fafb !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+  padding: 0.5rem !important;
+}
+
+.ckeditor-wrapper .ck-editor__editable {
+  border: 1px solid #e5e7eb !important;
+  border-top: none !important;
+  border-radius: 0 0 0.5rem 0.5rem !important;
+  padding: 1rem !important;
+}
+
+.ckeditor-wrapper .ck-button:not(.ck-disabled):hover {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+.ckeditor-wrapper .ck-button.ck-on {
+  background: #fbbf24 !important;
+  color: #78350f !important;
+}
+
+.ckeditor-wrapper .ck-dropdown__panel {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.ckeditor-wrapper .ck-list__item:hover {
+  background: #fef3c7 !important;
+}
+
+.ckeditor-wrapper .ck-list__item.ck-on {
+  background: #fbbf24 !important;
+  color: #78350f !important;
+}

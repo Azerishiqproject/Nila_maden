@@ -4,7 +4,8 @@ import {
   Navbar, 
   LiveGoldPrices, 
   FeaturedProductsSection, 
-  ImageContentSection, 
+  ImageContentSection,
+  BlogSection,
   Footer 
 } from '@/components';
 
@@ -27,6 +28,9 @@ export default function Home() {
 
       {/* Featured Products Section */}
       <FeaturedProductsSection />
+
+      {/* Blog Section */}
+      <BlogSection />
 
       {/* Stats Section */}
       <StatsSection />

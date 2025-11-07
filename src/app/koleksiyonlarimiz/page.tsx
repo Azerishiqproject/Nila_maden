@@ -1,78 +1,80 @@
 'use client';
 
 import Image from 'next/image';
-import { Crown, Star, Heart, Eye, Share2, Search, Grid, List, Award, Users, TrendingUp, Shield, Package } from 'lucide-react';
+import { Crown, Star, Eye, Search, Grid, List, Award, Users, TrendingUp, Shield, Package, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Navbar, Footer, FAQSection } from '@/components';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-
-// Product interface matching the admin structure
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  period: string;
-  material: string;
-  technique: string;
-  image: string;
-  category: string;
-  historicalInfo: string;
-  isFeatured: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import {
+  fetchCollectionProducts,
+  setSelectedProduct,
+  clearSelectedProduct,
+  setCategoryFilter,
+  setSearchQuery,
+  selectFilteredProducts,
+  selectCollectionLoading,
+  selectCollectionError,
+  selectSelectedProduct,
+  selectCollectionFilters,
+} from '@/store/slices/collectionSlice';
 
 export default function KoleksiyonlarimizPage() {
+  const dispatch = useAppDispatch();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error] = useState<string | null>(null);
   const [showProductModal, setShowProductModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 9;
+  
+  // Redux state
+  const products = useAppSelector(selectFilteredProducts);
+  const loading = useAppSelector(selectCollectionLoading);
+  const error = useAppSelector(selectCollectionError);
+  const selectedProduct = useAppSelector(selectSelectedProduct);
+  const filters = useAppSelector(selectCollectionFilters);
 
-  // Firebase'den ürünleri çek
-  const fetchProducts = async () => {
-    setLoading(true);
-    try {
-      const querySnapshot = await getDocs(collection(db, 'products'));
-      const productsData: Product[] = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        productsData.push({
-          id: doc.id,
-          ...data,
-          createdAt: data.createdAt?.toDate() || new Date(),
-          updatedAt: data.updatedAt?.toDate() || new Date()
-        } as Product);
-      });
-      setProducts(productsData);
-    } catch (error) {
-      console.error('Ürünler yüklenirken hata:', error);
-    } finally {
-      setLoading(false);
-    }
+  // Fetch products on mount
+  useEffect(() => {
+    dispatch(fetchCollectionProducts());
+  }, [dispatch]);
+
+  // Handle product selection
+  const handleProductClick = (product: typeof products[0]) => {
+    dispatch(setSelectedProduct(product));
+    setShowProductModal(true);
   };
 
-  // Component mount olduğunda ürünleri çek
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // Handle modal close
+  const handleCloseModal = () => {
+    setShowProductModal(false);
+    dispatch(clearSelectedProduct());
+  };
 
-  const filteredProducts = products.filter(product => {
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Handle category change
+  const handleCategoryChange = (category: string) => {
+    dispatch(setCategoryFilter(category));
+    setCurrentPage(1); // Reset to first page when category changes
+  };
+
+  // Handle search change
+  const handleSearchChange = (query: string) => {
+    dispatch(setSearchQuery(query));
+    setCurrentPage(1); // Reset to first page when search changes
+  };
+
+  // Calculate pagination
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+  const currentProducts = products.slice(startIndex, endIndex);
+
+  // Get all products for stats (not filtered)
+  const allProducts = useAppSelector((state) => state.collection.products);
 
   // Dynamic stats based on actual products
   const collectionStats = [
     {
       icon: Package,
-      number: products.length.toString(),
+      number: allProducts.length.toString(),
       label: "Koleksiyon Parçası",
       description: "Nadir ve değerli eserler"
     },
@@ -256,15 +258,17 @@ export default function KoleksiyonlarimizPage() {
                 <input
                   type="text"
                   placeholder="Koleksiyon ara..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  value={filters.searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
                   className="pl-10 pr-4 py-2 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 />
               </div>
               
               <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                value={filters.category}
+                onChange={(e) => {
+                  handleCategoryChange(e.target.value);
+                }}
                 className="px-4 py-2 border border-gray-300 text-black rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
               >
                 <option value="all">Tüm Kategoriler</option>
@@ -298,19 +302,20 @@ export default function KoleksiyonlarimizPage() {
               <h3 className="text-lg font-medium text-gray-900 mb-2">Ürünler yükleniyor...</h3>
               <p className="text-gray-600">Lütfen bekleyin.</p>
             </div>
-          ) : products.length === 0 ? (
+          ) : allProducts.length === 0 ? (
             <div className="text-center py-12">
               <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">Henüz koleksiyon yok</h3>
               <p className="text-gray-600">Koleksiyon parçaları yakında eklenecek</p>
             </div>
           ) : (
-            <div className={`grid gap-6 ${
-              viewMode === 'grid' 
-                ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' 
-                : 'grid-cols-1'
-            }`}>
-              {filteredProducts.map((product) => (
+            <>
+              <div className={`grid gap-6 ${
+                viewMode === 'grid' 
+                  ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' 
+                  : 'grid-cols-1'
+              }`}>
+                {currentProducts.map((product) => (
                 <div key={product.id} className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden ${
                   viewMode === 'list' ? 'flex' : ''
                 }`}>
@@ -364,29 +369,82 @@ export default function KoleksiyonlarimizPage() {
                     
                     <div className="flex gap-2">
                       <button 
-                        onClick={() => {
-                          setSelectedProduct(product);
-                          setShowProductModal(true);
-                        }}
-                        className="flex-1 bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                        onClick={() => handleProductClick(product)}
+                        className="w-full bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
                       >
                         <Eye className="w-4 h-4" />
                         Detayları Gör
-                      </button>
-                      <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-600 hover:text-gray-700">
-                        <Heart className="w-4 h-4" />
-                      </button>
-                      <button className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-600 hover:text-gray-700">
-                        <Share2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="mt-12 flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors flex items-center gap-2"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>Önceki</span>
+                  </button>
+                  
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                      // Show first page, last page, current page, and pages around current
+                      if (
+                        page === 1 ||
+                        page === totalPages ||
+                        (page >= currentPage - 1 && page <= currentPage + 1)
+                      ) {
+                        return (
+                          <button
+                            key={page}
+                            onClick={() => setCurrentPage(page)}
+                            className={`px-4 py-2 rounded-lg border transition-colors ${
+                              currentPage === page
+                                ? 'bg-amber-500 text-white border-amber-500'
+                                : 'border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            {page}
+                          </button>
+                        );
+                      } else if (
+                        page === currentPage - 2 ||
+                        page === currentPage + 2
+                      ) {
+                        return <span key={page} className="px-2">...</span>;
+                      }
+                      return null;
+                    })}
+                  </div>
+                  
+                  <button
+                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors flex items-center gap-2"
+                  >
+                    <span>Sonraki</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
+              {/* Page Info */}
+              {totalPages > 1 && (
+                <div className="mt-4 text-center text-sm text-gray-600">
+                  Sayfa {currentPage} / {totalPages} ({products.length} koleksiyon parçası)
+                </div>
+              )}
+            </>
           )}
           
-          {!loading && filteredProducts.length === 0 && products.length > 0 && (
+          {!loading && products.length === 0 && allProducts.length > 0 && (
             <div className="text-center py-12">
               <Search className="w-16 h-16 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">Sonuç bulunamadı</h3>
@@ -414,7 +472,7 @@ export default function KoleksiyonlarimizPage() {
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-gray-900">Ürün Detayı</h2>
                 <button 
-                  onClick={() => setShowProductModal(false)}
+                  onClick={handleCloseModal}
                   className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                 >
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

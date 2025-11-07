@@ -10,6 +10,7 @@ import {
 } from '../../store/slices/adminSlice';
 import Contact from './Contact';
 import ProductManagement from './ProductManagement';
+import BlogManagement from './BlogManagement';
 import { 
   Shield, 
   Package, 
@@ -17,6 +18,7 @@ import {
   LogOut, 
   UserPlus, 
   MessageCircle, 
+  FileText,
   Menu,
   X
 } from 'lucide-react';
@@ -30,7 +32,7 @@ export default function AdminDashboard({ isStaticAuth = false }: AdminDashboardP
   const { user, isAuthenticated } = useAppSelector((state: { auth: { user: unknown; isAuthenticated: boolean } }) => state.auth);
   const { loading, error } = useAppSelector((state: { admin: { loading: boolean; error: string | null } }) => state.admin);
   
-  const [activeTab, setActiveTab] = useState<'products' | 'prices' | 'contact'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'prices' | 'contact' | 'blog'>('products');
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [createUserForm, setCreateUserForm] = useState({
@@ -83,6 +85,12 @@ export default function AdminDashboard({ isStaticAuth = false }: AdminDashboardP
       name: 'Ürün Yönetimi',
       icon: Package,
       description: 'Ürünleri ekle, düzenle ve sil'
+    },
+    {
+      id: 'blog',
+      name: 'Blog Yönetimi',
+      icon: FileText,
+      description: 'Blog yazılarını yönet'
     },
     {
       id: 'prices',
@@ -300,7 +308,7 @@ export default function AdminDashboard({ isStaticAuth = false }: AdminDashboardP
                   <button
                     key={item.id}
                     onClick={() => {
-                      setActiveTab(item.id as 'products' | 'prices' | 'contact');
+                      setActiveTab(item.id as 'products' | 'prices' | 'contact' | 'blog');
                       setSidebarOpen(false);
                     }}
                     className={`w-full flex items-center space-x-3 px-4 py-4 text-left rounded-xl transition-all duration-200 touch-manipulation ${
@@ -354,6 +362,8 @@ export default function AdminDashboard({ isStaticAuth = false }: AdminDashboardP
             {!loading && (
               <div className="space-y-6">
                 {activeTab === 'products' && <ProductManagement />}
+                
+                {activeTab === 'blog' && <BlogManagement />}
                 
                 {activeTab === 'prices' && (
                   <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8">
